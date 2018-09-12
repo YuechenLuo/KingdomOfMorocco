@@ -23,4 +23,8 @@
 .bald-body pre {
     color: #eee;
     font-size: 8pt;
+    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: auto;
+    margin: 0;
 }
