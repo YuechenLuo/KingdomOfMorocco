@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import ZoeyBirthday from './Components/ZoeyBirthday';
+import ZoeyBirthday from './Components/Birthday/ZoeyBirthday';
 import Home from './Components/Home';
 
 class App extends Component {
