@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CrossfadeImage from 'react-crossfade-image';
 
 class BirthdayText extends Component {
 

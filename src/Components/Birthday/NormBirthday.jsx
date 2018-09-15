@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import Sound from 'react-sound';
 import BirthdayImage from './BirthdayImage';
 import BirthdayText from './BirthdayText';
