@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import BaldBirthday from './BaldBirthday';
 import NormBirthday from './NormBirthday';
 import '../../css/zoeyBirthday.css';
-import '../../css/global.css';
 
 class ZoeyBirthday extends Component {
 

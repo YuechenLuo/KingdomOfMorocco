@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import '../css/home.css';
 
 class Home extends Component {
 
@@ -13,7 +14,9 @@ class Home extends Component {
     }
 
     return (
-      <h3>Hello World!</h3>
+      <div className='header'>
+        <div className='home-container'></div>
+      </div>
     );
   }
 }
