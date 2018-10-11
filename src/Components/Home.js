@@ -8,7 +8,7 @@ class Home extends Component {
     const date_now = new Date();
     const mm = date_now.getMonth() + 1;
     const dd = date_now.getDate();
-    if ( mm === 9 && dd <= 16) {
+    if ( mm === 9 && dd === 16) {
         return <Redirect to='/zoeyBirthday' />;
     }
 
