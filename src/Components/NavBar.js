@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import siteLogo from '../Assets/img/SmileLogo.png';
@@ -15,7 +16,7 @@ class NavBar extends Component {
 
     getLoginButton() {
         return (
-            <Button className='float-right btn-info'>Sign in</Button>
+            <Button className='float-right btn-info' onClick={this.props.signinPageRedirector}>Sign in</Button>
         );
     }
 
@@ -27,7 +28,7 @@ class NavBar extends Component {
                         <img src={siteLogo} alt='SiteLogo'/>
                         <p>Kingdom of Morocco</p>
                     </div>
-                    { this.props.signin ? this.getUserInfo() : this.getLoginButton()}
+                    { this.props.signedin ? this.getUserInfo() : this.getLoginButton()}
                 </div>
             </div>
         );
@@ -36,11 +37,13 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-    signin: PropTypes.bool
+    signedin: PropTypes.bool,
+    signinPageRedirector: PropTypes.func
 }
 
 NavBar.defaultProps = {
-    signin: false
+    signedin: false,
+    signinPageRedirector: () => {}
 }
 
 export default NavBar;

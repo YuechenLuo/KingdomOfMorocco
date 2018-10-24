@@ -11,20 +11,60 @@ import './css/bootstrap.min.css';
 
 class App extends Component {
 
-  render() {
-      return (
-        <div>
-          <NavBar signin={false}/>
-          <BrowserRouter>
+    constructor(props) {
+        super(props);
+        this.state = {
+            signedin: false,
+            showSigninPage: false,
+            // APIBaseUrl: 'https://kom-service-beta.herokuapp.com',
+            APIBaseUrl: 'http://localhost:8080',
+            userInfo: {}
+        };
+
+        this.userInfoUpdater = this.userInfoUpdater.bind(this);
+        this.signinRedirector = this.signinRedirector.bind(this);
+
+    }
+
+    userInfoUpdater(info) {
+        this.setState({
+            userInfo: info,
+            showSigninPage: false,
+            signedin: true
+        });
+    }
+
+    signinRedirector(show) {
+        this.setState({
+            showSigninPage: true
+        });
+    }
+
+    render() {
+        if ( this.state.showSigninPage ) {
+            return <Signin
+                    userInfoUpdater={this.userInfoUpdater}
+                    fromUrl={currentPath}
+                    APIBaseUrl={this.state.APIBaseUrl}/>;
+        }
+        const currentPath = window.location.pathname;
+        const showNavbar = ('/zoeyBirthday' !== currentPath);
+
+        return (
             <div>
-              <Route exact path='/' component={Home} />
-              <Route path='/zoeyBirthday' component={ZoeyBirthday} />
-              <Route path='/signin' component={Signin} />
-              <Route path='/frm' component={FRM} />
-            </div>
-          </BrowserRouter>
-        </div>);
-  }
+                { showNavbar && <NavBar
+                    signedin={this.state.signedin}
+                    signinPageRedirector={this.signinRedirector}/> }
+
+                <BrowserRouter>
+                    <div>
+                        <Route exact path='/' component={Home} />
+                        <Route path='/zoeyBirthday' component={ZoeyBirthday} />
+                        <Route path='/frm' component={FRM} />
+                    </div>
+                </BrowserRouter>
+            </div>);
+    }
 }
 
 export default App;

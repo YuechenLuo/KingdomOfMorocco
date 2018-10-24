@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Sound from 'react-sound';
 import BirthdayImage from './BirthdayImage';
 import BirthdayText from './BirthdayText';
-import bgmusic from '../../Assets/img/zoeyBirthday/city_of_star.mp3';
+// import bgmusic from '../../Assets/img/zoeyBirthday/city_of_star.mp3';
 
 const PAGE_DURATION = 8000;
 
@@ -32,10 +32,10 @@ class NormBirthday extends Component {
     render() {
       return (
             <div>
-                <Sound 
+                {/* <Sound 
                   url={bgmusic}
                   playStatus={Sound.status.PLAYING}
-                />
+                /> */}
                 <BirthdayImage page={this.state.page} />
                 <BirthdayText page={this.state.page} />
             </div>

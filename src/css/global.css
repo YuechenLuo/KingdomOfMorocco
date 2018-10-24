@@ -39,6 +39,7 @@ body * {
     vertical-align: middle;
 }
 
+
 @media(max-width: 400px) {
     .site-logo p {
         display: none;
