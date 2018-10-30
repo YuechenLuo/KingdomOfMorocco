@@ -6,6 +6,8 @@ import Signin from './Components/Signin';
 import FRM from './Components/FRM';
 import NavBar from './Components/NavBar';
 
+import EricHomepage from './Components/Eric/EricHomepage';
+
 import './css/global.css';
 import './css/bootstrap.min.css';
 
@@ -41,14 +43,15 @@ class App extends Component {
     }
 
     render() {
+        const currentPath = window.location.pathname;
+        const showNavbar = ('/zoeyBirthday' !== currentPath && '/eric' !== currentPath);
+
         if ( this.state.showSigninPage ) {
             return <Signin
                     userInfoUpdater={this.userInfoUpdater}
                     fromUrl={currentPath}
                     APIBaseUrl={this.state.APIBaseUrl}/>;
         }
-        const currentPath = window.location.pathname;
-        const showNavbar = ('/zoeyBirthday' !== currentPath);
 
         return (
             <div>
@@ -61,6 +64,7 @@ class App extends Component {
                         <Route exact path='/' component={Home} />
                         <Route path='/zoeyBirthday' component={ZoeyBirthday} />
                         <Route path='/frm' component={FRM} />
+                        <Route path='/eric' component={EricHomepage} />
                     </div>
                 </BrowserRouter>
             </div>);

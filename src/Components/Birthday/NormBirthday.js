@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Sound from 'react-sound';
+// import Sound from 'react-sound';
 import BirthdayImage from './BirthdayImage';
 import BirthdayText from './BirthdayText';
 // import bgmusic from '../../Assets/img/zoeyBirthday/city_of_star.mp3';

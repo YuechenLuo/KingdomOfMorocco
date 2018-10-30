@@ -7,6 +7,16 @@ body * {
     box-sizing: border-box;
 }
 
+.eric {
+    margin: 3rem;
+}
+.eric * {
+    font-family: 'Serif';
+}
+.eric h1, .eric h2, .eric h3, .eric h4, .eric h5, .eric h6 {
+    font-weight: 600;
+}
+
 .navbar {
     padding: 0.8rem 1.3rem;
     background-color: #EEE;
