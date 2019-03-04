@@ -3,7 +3,6 @@ import { Button, FormGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-import '../css/bootstrap.min.css';
 import '../css/signin.css';
 
 class Signin extends Component {
@@ -39,8 +38,13 @@ class Signin extends Component {
         .then((res) => {
             // send back login result here
             console.log(res);
-            this.props.userInfoUpdater(res);
+            localStorage.setItem('accessToken', res.data.accessToken);
+            const redirectUrl = localStorage.getItem('loginFrom');
+            console.log(redirectUrl);
+            window.location = redirectUrl ? redirectUrl : '/';
+
         }, (err) => {
+            // TODO: Display error
             console.log(err.response);
         });
     }
@@ -80,13 +84,7 @@ class Signin extends Component {
 }
 
 Signin.propTypes = {
-    fromUrl: PropTypes.string,
-    APIBaseUrl: PropTypes.string.isRequired,
-    userInfoUpdater: PropTypes.func
-}
-Signin.defaultProps = {
-    fromUrl: '/',
-    userInfoUpdater: () => {}
+    APIBaseUrl: PropTypes.string.isRequired
 }
 
 export default Signin;

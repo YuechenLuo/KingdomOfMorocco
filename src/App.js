@@ -5,11 +5,10 @@ import Home from './Components/Home';
 import Signin from './Components/Signin';
 import FRM from './Components/FRM';
 import NavBar from './Components/NavBar';
-
 import EricHomepage from './Components/Eric/EricHomepage';
+import ConsoleHome from './Components/Console/ConsoleHome'
 
 import './css/global.css';
-import './css/bootstrap.min.css';
 
 class App extends Component {
 
@@ -17,10 +16,9 @@ class App extends Component {
         super(props);
         this.state = {
             signedin: false,
-            showSigninPage: false,
-            // APIBaseUrl: 'https://kom-service-beta.herokuapp.com',
-            APIBaseUrl: 'http://localhost:8080',
-            userInfo: {}
+            APIBaseUrl: 'https://kom-service-beta.herokuapp.com',
+            // APIBaseUrl: 'http://localhost:8080',
+            hideNavBar: ['/signin', '/ZoeyBirthday', '/console']
         };
 
         this.userInfoUpdater = this.userInfoUpdater.bind(this);
@@ -42,29 +40,39 @@ class App extends Component {
         });
     }
 
+    componentWillMount() {
+        if ( localStorage.getItem('accessToken') ) {
+            this.setState({
+                signedin: true
+            });
+        }
+    }
+
     render() {
         const currentPath = window.location.pathname;
-        const showNavbar = ('/zoeyBirthday' !== currentPath && '/eric' !== currentPath);
-
-        if ( this.state.showSigninPage ) {
-            return <Signin
-                    userInfoUpdater={this.userInfoUpdater}
-                    fromUrl={currentPath}
-                    APIBaseUrl={this.state.APIBaseUrl}/>;
-        }
+        const showNavbar = !this.state.hideNavBar.includes(currentPath);
 
         return (
             <div>
                 { showNavbar && <NavBar
                     signedin={this.state.signedin}
-                    signinPageRedirector={this.signinRedirector}/> }
+                    signinRedirector={this.signinRedirector}/> }
 
                 <BrowserRouter>
                     <div>
                         <Route exact path='/' component={Home} />
+                        <Route path='/signin' component={
+                            () => <Signin
+                                APIBaseUrl={this.state.APIBaseUrl} />
+                        }/>
                         <Route path='/zoeyBirthday' component={ZoeyBirthday} />
                         <Route path='/frm' component={FRM} />
                         <Route path='/eric' component={EricHomepage} />
+                        <Route path='/console' component={
+                            () => <ConsoleHome
+                                signedin={this.state.signedin}
+                                APIBaseUrl={this.state.APIBaseUrl} />
+                        }/>
                     </div>
                 </BrowserRouter>
             </div>);
