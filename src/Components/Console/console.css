@@ -90,3 +90,22 @@
     top: 0;
     z-index: 50;
 }
+
+.op-bar {
+    width: 18rem;
+    background-color: #1e1e1e;
+    border-top: #000 1px solid;
+    padding: 0.4rem 0;
+    font-family: Helvetica;
+    font-size: 0.9em;
+    position: relative;
+    top: 13rem;
+}
+.op-bar label {
+    margin-left: 1rem;
+    color: #bbb;
+}
+.op-bar a {
+    float: right;
+    margin-right: 1rem;
+}

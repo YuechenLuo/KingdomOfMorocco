@@ -1,10 +1,9 @@
 .task-group-container {
     background-color: #222;
     position: absolute;
-    top: 13rem;
+    top: 14.9rem;
     bottom: 0;
     width: 18rem;
-    border-top: #000 1px solid;
     overflow-y: scroll;
     font-family: Helvetica;
 }
@@ -24,28 +23,4 @@
 .task-group-container::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
-}
-
-.op-bar {
-    background-color: #1e1e1e;
-    padding: 0.4rem 0;
-    font-size: 0.9em;
-}
-.op-bar label {
-    margin-left: 1rem;
-    color: #bbb;
-}
-.op-bar a {
-    float: right;
-    margin-right: 1rem;
-}
-
-.text-link {
-    color: #eee;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-}
-.text-link:hover {
-    text-decoration: underline;
 }

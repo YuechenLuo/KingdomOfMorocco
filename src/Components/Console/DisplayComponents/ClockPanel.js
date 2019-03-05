@@ -7,7 +7,7 @@ class ClockPanel extends Component {
     render() {
         const day = this.props.datetime.getDay();
         const dd = this.props.datetime.getDate();
-        const mm = this.props.datetime.getMonth();
+        const mm = this.props.datetime.getMonth()+1 ;
         const yyyy = this.props.datetime.getFullYear();
         const h24 = this.props.datetime.getHours();
         const h = h24 > 12 ? h24-12 : h24;

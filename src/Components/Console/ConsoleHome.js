@@ -4,6 +4,7 @@ import axios from 'axios';
 import TaskList from './TaskList';
 import TaskGroupList from './TaskGroupList';
 import DisplayPanel from './DisplayPanel';
+import PopupInput from '../PopupInput'
 import PropTypes from 'prop-types';
 
 import './console.css';
@@ -15,11 +16,14 @@ class ConsoleHome extends Component {
         super(props);
         this.state = {
             taskGroupData: [],
-            taskData: []
+            taskData: [],
+            showCreateGroupPopup: false
         };
 
         this.retrieveTaskInfo = this.retrieveTaskInfo.bind(this);
         this.createTaskGroup = this.createTaskGroup.bind(this);
+        this.clearPopups = this.clearPopups.bind(this);
+        this.newGroupHandler = this.newGroupHandler.bind(this);
     }
 
     createTaskGroup(groupName) {
@@ -40,6 +44,19 @@ class ConsoleHome extends Component {
         }, (err) => {
             // TODO: Error handling
             console.log(err);
+        });
+    }
+
+    clearPopups() {
+        this.setState({
+            showCreateGroupPopup: false
+        });
+    }
+
+    newGroupHandler() {
+        console.log(111);
+        this.setState({
+            showCreateGroupPopup: true
         });
     }
 
@@ -83,10 +100,20 @@ class ConsoleHome extends Component {
         }
         return (
             <div className="console-container">
+                { this.state.showCreateGroupPopup && <PopupInput
+                    title="Create Task Group"
+                    fields={[{
+                        label: 'Group Name'
+                    }]}
+                    inputHandler={this.createTaskGroup}
+                    cancelHandler={this.clearPopups}/>}
                 <DisplayPanel/>
+                <div className='op-bar'>
+                    <label>Task Groups</label>
+                    <a className="text-link" onClick={this.newGroupHandler}>New</a>
+                </div>
                 <TaskGroupList
-                    groups={this.state.taskGroupData}
-                    newGroupHandler={this.createTaskGroup}/>
+                    groups={this.state.taskGroupData}/>
                 <TaskList/>
             </div>
         );

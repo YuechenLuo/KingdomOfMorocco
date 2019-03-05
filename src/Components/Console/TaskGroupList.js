@@ -14,10 +14,6 @@ class TaskGroupList extends Component {
     render() {
         return (
             <div className="task-group-container">
-                <div class='op-bar'>
-                    <label>Task Groups</label>
-                    <a className="text-link" nclick={()=>{console.log("new")}}>New</a>
-                </div>
                 {this.getTaskGroupList()}
             </div>
         );
@@ -27,8 +23,7 @@ class TaskGroupList extends Component {
 
 TaskGroupList.propTypes = {
     groups: PropTypes.array.isRequired,
-    activeItem: PropTypes.number,
-    newGroupHandler: PropTypes.func.isRequired
+    activeItem: PropTypes.number
 }
 
 TaskGroupList.defaultProps = {
