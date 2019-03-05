@@ -26,7 +26,8 @@ class ConsoleHome extends Component {
         this.newGroupHandler = this.newGroupHandler.bind(this);
     }
 
-    createTaskGroup(groupName) {
+    createTaskGroup(inputs) {
+        const groupName = inputs[0];
         const getTaskUrl = `${this.props.APIBaseUrl}/task/createGroup`;
 
         axios({
@@ -54,7 +55,6 @@ class ConsoleHome extends Component {
     }
 
     newGroupHandler() {
-        console.log(111);
         this.setState({
             showCreateGroupPopup: true
         });
@@ -73,39 +73,33 @@ class ConsoleHome extends Component {
         }).then((res) => {
             console.log(res.data);
             this.setState({
-                signedin: this.props.signedin,
                 taskGroupData: res.data.taskGroups,
                 taskData: res.data.tasks
             });
         }, (err) => {
             // TODO: Error handling
-            console.log(err);
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            }
         });
     }
 
-
-    componentDidMount() {
-        if (this.props.signedin) {
-            const data = this.retrieveTaskInfo();
-            this.setState({
-                signedin: this.props.signedin
-            });
-        }
+    componentWillMount() {
+        this.retrieveTaskInfo();
     }
 
     render() {
-        if ( !this.props.signedin ) {
-            localStorage.setItem('loginFrom', window.location.pathname);
-            return <Redirect to='/signin'/>
-        }
+        
         return (
             <div className="console-container">
                 { this.state.showCreateGroupPopup && <PopupInput
                     title="Create Task Group"
                     fields={[{
+                        key: 0,
                         label: 'Group Name'
                     }]}
-                    inputHandler={this.createTaskGroup}
+                    okHandler={this.createTaskGroup}
                     cancelHandler={this.clearPopups}/>}
                 <DisplayPanel/>
                 <div className='op-bar'>
@@ -122,8 +116,7 @@ class ConsoleHome extends Component {
 }
 
 ConsoleHome.propTypes = {
-    APIBaseUrl: PropTypes.string.isRequired,
-    signedin: PropTypes.bool
+    APIBaseUrl: PropTypes.string.isRequired
 }
 
 export default ConsoleHome;

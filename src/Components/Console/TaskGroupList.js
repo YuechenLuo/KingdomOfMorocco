@@ -7,8 +7,9 @@ class TaskGroupList extends Component {
     getTaskGroupList() {
         return this.props.groups.map(
             (row, i) => <TaskGroupItem
-                            value={row.group_name}
-                            active={i === this.props.activeItem}/>);
+                            groupName={row.group_name}
+                            active={i === this.props.activeItem}
+                            key={i}/>);
     }
 
     render() {

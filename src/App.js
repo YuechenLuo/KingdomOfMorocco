@@ -70,7 +70,6 @@ class App extends Component {
                         <Route path='/eric' component={EricHomepage} />
                         <Route path='/console' component={
                             () => <ConsoleHome
-                                signedin={this.state.signedin}
                                 APIBaseUrl={this.state.APIBaseUrl} />
                         }/>
                     </div>

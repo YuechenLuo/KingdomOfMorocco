@@ -13,7 +13,7 @@ class TaskGroupItem extends Component {
 
 }
 
-TaskGroupItem.PropTypes = {
+TaskGroupItem.propTypes = {
     groupName: PropTypes.string.isRequired,
     active: PropTypes.bool
 }
