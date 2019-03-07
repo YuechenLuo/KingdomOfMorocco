@@ -17,22 +17,28 @@ class ConsoleHome extends Component {
         this.state = {
             taskGroupData: [],
             taskData: [],
-            showCreateGroupPopup: false
+            showCreateGroupPopup: false,
+            showRenameGroupPopup: false,
+            activeGroup: 0
         };
 
         this.retrieveTaskInfo = this.retrieveTaskInfo.bind(this);
         this.createTaskGroup = this.createTaskGroup.bind(this);
+        this.updateTaskGroup = this.updateTaskGroup.bind(this);
+        this.deleteTaskGroup = this.deleteTaskGroup.bind(this);
+        this.renameGroupHandler = this.renameGroupHandler.bind(this);
         this.clearPopups = this.clearPopups.bind(this);
+        this.selectGroup = this.selectGroup.bind(this);
         this.newGroupHandler = this.newGroupHandler.bind(this);
     }
 
     createTaskGroup(inputs) {
         const groupName = inputs[0];
-        const getTaskUrl = `${this.props.APIBaseUrl}/task/createGroup`;
+        const createGroupUrl = `${this.props.APIBaseUrl}/task/createGroup`;
 
         axios({
             method: "PUT",
-            url: getTaskUrl,
+            url: createGroupUrl,
             headers: {
                 accessToken: localStorage.getItem('accessToken'),
                 "Content-Type": "application/json"
@@ -41,16 +47,50 @@ class ConsoleHome extends Component {
                 "group_name": groupName,
             })
         }).then((res) => {
+            this.clearPopups();
             this.retrieveTaskInfo();
         }, (err) => {
             // TODO: Error handling
-            console.log(err);
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            }
+
         });
+    }
+
+    deleteTaskGroup(group_id) {
+        console.log(group_id);
+        const deleteGroupUrl = `${this.props.APIBaseUrl}/task/group/${group_id}`;
+
+        axios({
+            method: "DELETE",
+            url: deleteGroupUrl,
+            headers: {
+                accessToken: localStorage.getItem('accessToken')
+            }
+        }).then((res) => {
+            this.retrieveTaskInfo();
+        }, (err) => {
+            // TODO: Error handling
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            } else {
+                console.log(err.response);
+            }
+
+        });
+    }
+
+    updateTaskGroup(body) {
+        console.log(body);
     }
 
     clearPopups() {
         this.setState({
-            showCreateGroupPopup: false
+            showCreateGroupPopup: false,
+            showRenameGroupPopup: false
         });
     }
 
@@ -60,6 +100,19 @@ class ConsoleHome extends Component {
         });
     }
 
+    renameGroupHandler(group_id) {
+        console.log(group_id);
+        this.setState({
+            showRenameGroupPopup: true,
+            rename_group_id: group_id
+        });
+    }
+
+    selectGroup(i) {
+        this.setState({
+            activeGroup: i
+        });
+    }
 
     retrieveTaskInfo() {
         const getTaskUrl = `${this.props.APIBaseUrl}/task/getTasks`;
@@ -93,6 +146,7 @@ class ConsoleHome extends Component {
         
         return (
             <div className="console-container">
+
                 { this.state.showCreateGroupPopup && <PopupInput
                     title="Create Task Group"
                     fields={[{
@@ -101,14 +155,28 @@ class ConsoleHome extends Component {
                     }]}
                     okHandler={this.createTaskGroup}
                     cancelHandler={this.clearPopups}/>}
+                { this.state.showRenameGroupPopup && <PopupInput
+                    title="Rename Task Group"
+                    fields={[{
+                        key: 0,
+                        label: 'Group Name'
+                    }]}
+                    okHandler={this.updateTaskGroup}
+                    cancelHandler={this.clearPopups}/>}
                 <DisplayPanel/>
                 <div className='op-bar'>
                     <label>Task Groups</label>
                     <a className="text-link" onClick={this.newGroupHandler}>New</a>
                 </div>
                 <TaskGroupList
-                    groups={this.state.taskGroupData}/>
-                <TaskList/>
+                    groups={this.state.taskGroupData}
+                    updateGroupHandler={this.renameGroupHandler}
+                    deleteGroupHandler={this.deleteTaskGroup}
+                    activeItem={this.state.activeGroup}
+                    selectGroup={this.selectGroup}/>
+                <div className="task-list-container">
+                    <TaskList/>
+                </div>
             </div>
         );
     }

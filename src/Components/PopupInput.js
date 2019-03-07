@@ -31,7 +31,8 @@ class PopupInput extends Component {
                 {this.props.fields.map(
                     (row, i) => <div className="input-group" key={row.key}>
                         <label>{row.label+":"}</label>
-                        <input 
+                        <input
+                            autoFocus={i===0}
                             type={row.type?row.type:'text'}
                             onChange={(e)=>{
                                 this.onInputChange(e.target.value, row.key)
