@@ -8,16 +8,20 @@ class TaskGroupList extends Component {
         console.log(e.target);
     }
 
+    clickGroup(e) {
+        console.log(e.target);
+    }
+
     getTaskGroupList() {
         return this.props.groups.map(
             (row, i) => <TaskGroupItem
                             groupName={row.group_name}
                             group_id={row._id}
-                            active={i === this.props.activeItem}
+                            active={row._id === this.props.activeGroupId}
                             key={i}
                             deleteGroupHandler={this.props.deleteGroupHandler}
                             updateGroupHandler={this.props.updateGroupHandler}
-                            onClick={()=>{console.log(1)}}/>);
+                            selectGroupHandler={this.props.selectGroup}/>);
     }
 
     render() {
@@ -32,14 +36,14 @@ class TaskGroupList extends Component {
 
 TaskGroupList.propTypes = {
     groups: PropTypes.array.isRequired,
-    activeItem: PropTypes.number,
+    activeGroupId: PropTypes.string,
     deleteGroupHandler: PropTypes.func.isRequired,
     updateGroupHandler: PropTypes.func.isRequired,
     selectGroup: PropTypes.func.isRequired
 }
 
 TaskGroupList.defaultProps = {
-    activeItem: 0
+    activeGroupId: ''
 }
 
 export default TaskGroupList;

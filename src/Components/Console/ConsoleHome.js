@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import TaskList from './TaskList';
 import TaskGroupList from './TaskGroupList';
@@ -19,7 +18,8 @@ class ConsoleHome extends Component {
             taskData: [],
             showCreateGroupPopup: false,
             showRenameGroupPopup: false,
-            activeGroup: 0
+            editNewTask: false,
+            activeGroupId: ''
         };
 
         this.retrieveTaskInfo = this.retrieveTaskInfo.bind(this);
@@ -30,6 +30,7 @@ class ConsoleHome extends Component {
         this.clearPopups = this.clearPopups.bind(this);
         this.selectGroup = this.selectGroup.bind(this);
         this.newGroupHandler = this.newGroupHandler.bind(this);
+        this.newTaskHandler = this.newTaskHandler.bind(this);
     }
 
     createTaskGroup(inputs) {
@@ -94,6 +95,8 @@ class ConsoleHome extends Component {
         });
     }
 
+    // Group Handlers
+
     newGroupHandler() {
         this.setState({
             showCreateGroupPopup: true
@@ -108,9 +111,17 @@ class ConsoleHome extends Component {
         });
     }
 
-    selectGroup(i) {
+    selectGroup(group_id) {
         this.setState({
-            activeGroup: i
+            activeGroupId: group_id
+        });
+    }
+
+    // Task handlers
+
+    newTaskHandler() {
+        this.setState({
+            editNewTask: true
         });
     }
 
@@ -127,7 +138,10 @@ class ConsoleHome extends Component {
             console.log(res.data);
             this.setState({
                 taskGroupData: res.data.taskGroups,
-                taskData: res.data.tasks
+                taskData: res.data.tasks,
+                activeGroupId: res.data.taskGroups.length
+                    ? res.data.taskGroups[0]._id
+                    : ''
             });
         }, (err) => {
             // TODO: Error handling
@@ -172,10 +186,17 @@ class ConsoleHome extends Component {
                     groups={this.state.taskGroupData}
                     updateGroupHandler={this.renameGroupHandler}
                     deleteGroupHandler={this.deleteTaskGroup}
-                    activeItem={this.state.activeGroup}
+                    activeGroupId={this.state.activeGroupId}
                     selectGroup={this.selectGroup}/>
                 <div className="task-list-container">
-                    <TaskList/>
+                    <div className="task-op-bar">
+                        <button onClick={this.newTaskHandler}>New Task</button>
+                        <button>Clear Tasks</button>
+                    </div>
+                    <TaskList
+                        activeGroupId={this.state.activeGroupId}
+                        tasks={this.state.taskData}
+                        editNewTask={this.state.editNewTask}/>
                 </div>
             </div>
         );

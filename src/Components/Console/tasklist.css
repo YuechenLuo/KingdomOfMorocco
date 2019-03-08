@@ -70,10 +70,55 @@
     background-color: #444;
 }
 
+.task-op-bar {
+    padding: 0.5rem 2rem;
+}
+.task-op-bar button {
+    background-color: transparent;
+    margin-right: 1rem;
+    padding: 0.2rem 1rem;
+    border: #aaa 1px solid;
+    border-radius: 5px;
+    color: #aaa;
+    outline: none;
+}
+.task-op-bar button:hover {
+    background-color: #444;
+}
+
+.task-list {
+    padding: 0 0 2rem 2rem;
+}
+.task-list .task-item {
+    background-color: #ff9;
+    margin-top: 1rem;
+    margin-right: 2rem;
+    padding: 0.8rem 0.1rem 0.6rem 1rem;
+    width: 12rem;
+    height: 9rem;
+    display: block;
+    float: left;
+    box-shadow: #000 3px 3px 20px;
+}
+.task-list .task-item textarea {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    font-size: 1.5em;
+    border: 0;
+    outline: none;
+}
+
 ::-webkit-scrollbar { width: 8px; height: 3px;}
 ::-webkit-scrollbar-button {  background-color: #666; }
 ::-webkit-scrollbar-track {  background-color: #646464;}
 ::-webkit-scrollbar-track-piece { background-color: #222;}
 ::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
-::-webkit-scrollbar-corner { background-color: #646464;}
-::-webkit-resizer { background-color: #666;}
+::-webkit-scrollbar-corner { background-color: transparent;display: none;}
+::-webkit-resizer { background-color: transparent;}
+
+.task-list .task-item textarea::-webkit-scrollbar-button {  background-color: transparent; }
+.task-list .task-item textarea::-webkit-scrollbar-track {  background-color: transparent;}
+.task-list .task-item textarea::-webkit-scrollbar-track-piece { background-color: transparent;}
+.task-list .task-item textarea::-webkit-scrollbar-thumb { background-color: #aa9; border-radius: 3px;}

@@ -12,6 +12,7 @@ class TaskGroupItem extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.showMenu = this.showMenu.bind(this);
         this.hideMenu = this.hideMenu.bind(this);
+        this.select = this.select.bind(this);
         this.rename = this.rename.bind(this);
         this.delete = this.delete.bind(this);
         this.bindEditLink = this.bindEditLink.bind(this);
@@ -35,11 +36,11 @@ class TaskGroupItem extends Component {
     }
 
     handleClick(e) {
-        e.preventDefault();
         if (this.editLink.contains(e.target)) {
             this.showMenu();
         } else if (!this.editLink.contains(e.target)
-            && !this.editMenu.contains(e.target)) {
+            && !this.editMenu.contains(e.target)
+            && this.state.showMenu ) {
             this.hideMenu();
         }
     }
@@ -50,6 +51,10 @@ class TaskGroupItem extends Component {
 
     bindEditMenu(node) {
         this.editMenu = node;
+    }
+
+    select() {
+        this.props.selectGroupHandler(this.props.group_id);
     }
 
     rename() {
@@ -72,7 +77,8 @@ class TaskGroupItem extends Component {
 
     render() {
         return (
-            <div className={`task-group ${this.props.active?'active':''} task-group-item`}>
+            <div className={`task-group ${this.props.active?'active':''} task-group-item`}
+                onClick={this.select}>
                 <p className="group-name">{this.props.groupName}</p>
                 <div className="edit-menu">
                     <a className="edit-link" ref={this.bindEditLink}>…</a>
@@ -94,7 +100,8 @@ TaskGroupItem.propTypes = {
     active: PropTypes.bool,
     showMenu: PropTypes.bool,
     deleteGroupHandler: PropTypes.func.isRequired,
-    updateGroupHandler: PropTypes.func.isRequired
+    updateGroupHandler: PropTypes.func.isRequired,
+    selectGroupHandler: PropTypes.func.isRequired
 }
 
 TaskGroupItem.defaultProps = {
