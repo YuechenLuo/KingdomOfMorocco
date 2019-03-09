@@ -33,6 +33,7 @@ class PopupInput extends Component {
                         <label>{row.label+":"}</label>
                         <input
                             autoFocus={i===0}
+                            value={row.defaultValue}
                             type={row.type?row.type:'text'}
                             onChange={(e)=>{
                                 this.onInputChange(e.target.value, row.key)

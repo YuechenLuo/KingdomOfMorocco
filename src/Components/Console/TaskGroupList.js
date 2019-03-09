@@ -4,14 +4,6 @@ import TaskGroupItem from './TaskGroupItem';
 
 class TaskGroupList extends Component {
 
-    selectGroupHandler(e) {
-        console.log(e.target);
-    }
-
-    clickGroup(e) {
-        console.log(e.target);
-    }
-
     getTaskGroupList() {
         return this.props.groups.map(
             (row, i) => <TaskGroupItem

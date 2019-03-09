@@ -93,14 +93,56 @@
     background-color: #ff9;
     margin-top: 1rem;
     margin-right: 2rem;
-    padding: 0.8rem 0.1rem 0.6rem 1rem;
     width: 12rem;
     height: 9rem;
     display: block;
     float: left;
     box-shadow: #000 3px 3px 20px;
 }
+.task-list .task-item .done-img {
+    position: absolute;
+    height: 11rem;
+    width: 14rem;
+    margin-left: -10px;
+    margin-top: -10px;
+    opacity: 0;
+    overflow: hidden;
+}
+.task-list .task-item .done-img img {
+    height: 11rem;
+    width: 14rem;
+}
+.task-list .task-item:not(.editing):hover .done-img.placeholder {
+    opacity: 0.1;
+}
+.task-list .task-item .done-img.real {
+    opacity: 0.6;
+    width: 0;
+}
+.task-list .task-item .done-img.real.show {
+    transition: width 0.5s linear;
+    width: 14rem;
+}
+
+.taskitem-op-bar {
+    position: relative;
+}
+.taskitem-op-bar .edit-button {
+    float: right;
+    height: 0;
+    cursor: pointer;
+}
+.taskitem-op-bar .edit-button:hover {
+    background-color: #fff;
+    opacity: 0.5;
+}
+.taskitem-op-bar .edit-button img {
+    height: 22px;
+    padding-right: 0.3rem;
+    padding-top: 0.3rem;
+}
 .task-list .task-item textarea {
+    padding: 0.8rem 0.1rem 0.6rem 1rem;
     background-color: transparent;
     width: 100%;
     height: 100%;

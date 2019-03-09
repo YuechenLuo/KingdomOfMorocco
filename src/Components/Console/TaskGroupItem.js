@@ -58,7 +58,7 @@ class TaskGroupItem extends Component {
     }
 
     rename() {
-        this.props.updateGroupHandler(this.props.group_id);
+        this.props.updateGroupHandler(this.props.group_id, this.props.groupName);
         this.hideMenu();
     }
 

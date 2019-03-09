@@ -19,9 +19,12 @@ class ConsoleHome extends Component {
             showCreateGroupPopup: false,
             showRenameGroupPopup: false,
             editNewTask: false,
-            activeGroupId: ''
+            activeGroupId: '',
+            renameGroupId: '',
+            renameGroupName: ''
         };
 
+        this.keepAliveRequest = this.keepAliveRequest.bind(this);
         this.retrieveTaskInfo = this.retrieveTaskInfo.bind(this);
         this.createTaskGroup = this.createTaskGroup.bind(this);
         this.updateTaskGroup = this.updateTaskGroup.bind(this);
@@ -31,6 +34,60 @@ class ConsoleHome extends Component {
         this.selectGroup = this.selectGroup.bind(this);
         this.newGroupHandler = this.newGroupHandler.bind(this);
         this.newTaskHandler = this.newTaskHandler.bind(this);
+        this.createTask = this.createTask.bind(this);
+        this.updateTask = this.updateTask.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
+    }
+
+    /**
+     * API Calls
+     */
+    keepAliveRequest() {
+        const keepAliveUrl = this.props.APIBaseUrl;
+
+        axios({
+            method: "GET",
+            url: keepAliveUrl
+        }).then((res) => {
+            console.log(res);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+
+    retrieveTaskInfo() {
+        const getTaskUrl = `${this.props.APIBaseUrl}/task/getTasks`;
+
+        axios({
+            method: "GET",
+            url: getTaskUrl,
+            headers: {
+                accessToken: localStorage.getItem('accessToken')
+            }
+        }).then((res) => {
+            console.log(res.data);
+            let group_id = 0;
+            if ( res.data.taskGroups.find((element) => {
+                return element._id === this.state.activeGroupId;
+            }) ) {
+                group_id = this.state.activeGroupId;
+            } else if ( res.data.taskGroups.length ) {
+                group_id = res.data.taskGroups[0]._id;
+            }
+
+            this.setState({
+                taskGroupData: res.data.taskGroups,
+                activeGroupId: group_id,
+                taskData: res.data.tasks,
+                editNewTask: false
+            });
+        }, (err) => {
+            // TODO: Error handling
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            }
+        });
     }
 
     createTaskGroup(inputs) {
@@ -45,7 +102,7 @@ class ConsoleHome extends Component {
                 "Content-Type": "application/json"
             },
             data: JSON.stringify({
-                "group_name": groupName,
+                "group_name": groupName
             })
         }).then((res) => {
             this.clearPopups();
@@ -61,7 +118,6 @@ class ConsoleHome extends Component {
     }
 
     deleteTaskGroup(group_id) {
-        console.log(group_id);
         const deleteGroupUrl = `${this.props.APIBaseUrl}/task/group/${group_id}`;
 
         axios({
@@ -71,6 +127,7 @@ class ConsoleHome extends Component {
                 accessToken: localStorage.getItem('accessToken')
             }
         }).then((res) => {
+            console.log('deleted');
             this.retrieveTaskInfo();
         }, (err) => {
             // TODO: Error handling
@@ -84,9 +141,109 @@ class ConsoleHome extends Component {
         });
     }
 
-    updateTaskGroup(body) {
-        console.log(body);
+    updateTaskGroup(inputs) {
+        const groupName = inputs[0];
+        const updateGroupUrl = `${this.props.APIBaseUrl}/task/updateGroup`;
+
+        axios({
+            method: "POST",
+            url: updateGroupUrl,
+            headers: {
+                accessToken: localStorage.getItem('accessToken'),
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify({
+                _id: this.state.renameGroupId,
+                "group_name": groupName
+            })
+        }).then((res) => {
+            this.clearPopups();
+            this.retrieveTaskInfo();
+        }, (err) => {
+            // TODO: Error handling
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            }
+
+        });
     }
+
+    createTask(body) {
+        body.group = this.state.activeGroupId;
+        const createTaskUrl = `${this.props.APIBaseUrl}/task/createTask`;
+
+        axios({
+            method: "PUT",
+            url: createTaskUrl,
+            headers: {
+                accessToken: localStorage.getItem('accessToken'),
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify(body)
+        }).then((res) => {
+            this.retrieveTaskInfo();
+        }, (err) => {
+            // TODO: Error handling
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            }
+
+        });
+    }
+
+    updateTask(body) {
+        const updateTaskUrl = `${this.props.APIBaseUrl}/task/updateTask`;
+        console.log(body);
+        axios({
+            method: "POST",
+            url: updateTaskUrl,
+            headers: {
+                accessToken: localStorage.getItem('accessToken'),
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify(body)
+        }).then((res) => {
+            this.retrieveTaskInfo();
+        }, (err) => {
+            // TODO: Error handling
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            }
+
+        });
+    }
+
+    deleteTask(task_id) {
+        const deleteTaskUrl = `${this.props.APIBaseUrl}/task/${task_id}`;
+
+        axios({
+            method: "DELETE",
+            url: deleteTaskUrl,
+            headers: {
+                accessToken: localStorage.getItem('accessToken')
+            }
+        }).then((res) => {
+            console.log('deleted');
+            this.retrieveTaskInfo();
+        }, (err) => {
+            // TODO: Error handling
+            const status = err.response.status;
+            if ( status === 403 || status === 401) {
+                window.location = '/signin';
+            } else {
+                console.log(err.response);
+            }
+
+        });
+    }
+
+
+    /**
+     *
+     */
 
     clearPopups() {
         this.setState({
@@ -103,11 +260,11 @@ class ConsoleHome extends Component {
         });
     }
 
-    renameGroupHandler(group_id) {
-        console.log(group_id);
+    renameGroupHandler(group_id, group_name) {
         this.setState({
             showRenameGroupPopup: true,
-            rename_group_id: group_id
+            renameGroupId: group_id,
+            renameGroupName: group_name
         });
     }
 
@@ -125,35 +282,15 @@ class ConsoleHome extends Component {
         });
     }
 
-    retrieveTaskInfo() {
-        const getTaskUrl = `${this.props.APIBaseUrl}/task/getTasks`;
-
-        axios({
-            method: "GET",
-            url: getTaskUrl,
-            headers: {
-                accessToken: localStorage.getItem('accessToken')
-            }
-        }).then((res) => {
-            console.log(res.data);
-            this.setState({
-                taskGroupData: res.data.taskGroups,
-                taskData: res.data.tasks,
-                activeGroupId: res.data.taskGroups.length
-                    ? res.data.taskGroups[0]._id
-                    : ''
-            });
-        }, (err) => {
-            // TODO: Error handling
-            const status = err.response.status;
-            if ( status === 403 || status === 401) {
-                window.location = '/signin';
-            }
-        });
-    }
-
     componentWillMount() {
         this.retrieveTaskInfo();
+    }
+
+    componentDidMount() {
+        this.keepAliveInterval = setInterval(
+            () => {
+                this.keepAliveRequest();
+            }, 1200000);
     }
 
     render() {
@@ -173,7 +310,8 @@ class ConsoleHome extends Component {
                     title="Rename Task Group"
                     fields={[{
                         key: 0,
-                        label: 'Group Name'
+                        label: 'Group Name',
+                        defaultValue: this.state.renameGroupName
                     }]}
                     okHandler={this.updateTaskGroup}
                     cancelHandler={this.clearPopups}/>}
@@ -196,7 +334,10 @@ class ConsoleHome extends Component {
                     <TaskList
                         activeGroupId={this.state.activeGroupId}
                         tasks={this.state.taskData}
-                        editNewTask={this.state.editNewTask}/>
+                        editNewTask={this.state.editNewTask}
+                        createTaskHandler={this.createTask}
+                        updateTaskHandler={this.updateTask}
+                        deleteTaskHandler={this.deleteTask}/>
                 </div>
             </div>
         );

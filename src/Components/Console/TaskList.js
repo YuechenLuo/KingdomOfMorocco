@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import TaskItem from './TaskItem';
 import './tasklist.css';
 
 class TaskList extends Component {
 
-    getTasks() {
-        this.props.tasks.map(
-            (row, i) => {
-                if ( row.group === this.props.activeGroupId ) {
-                    return <div className="task-item">row.body</div>
-                }
-            });
-    }
-
     render() {
         return (
             <div className="task-list">
-                { this.getTasks() }
+                {this.props.tasks.map(
+                    (row, i) => {
+                        if ( row.group === this.props.activeGroupId ) {
+                            return <TaskItem
+                                taskId={row._id}
+                                key={i}
+                                body={row.body}
+                                updateTask={this.props.updateTaskHandler}
+                                deleteTask={this.props.deleteTaskHandler}/>
+                        } else return "";
+                    })}
                 { this.props.editNewTask &&
-                    <div className="task-item">
-                        <textarea type="text" cols="5"/>
-                    </div>}
+                   <TaskItem isNew
+                    createTask={this.props.createTaskHandler}/>}
             </div>
         );
     }
@@ -30,7 +31,10 @@ class TaskList extends Component {
 TaskList.propTypes = {
     activeGroupId: PropTypes.string.isRequired,
     tasks: PropTypes.array.isRequired,
-    editNewTask: PropTypes.bool.isRequired
+    editNewTask: PropTypes.bool.isRequired,
+    createTaskHandler: PropTypes.func.isRequired,
+    updateTaskHandler: PropTypes.func.isRequired,
+    deleteTaskHandler: PropTypes.func.isRequired
 }
 
 export default TaskList;
