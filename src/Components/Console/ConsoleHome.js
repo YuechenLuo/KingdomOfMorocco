@@ -66,7 +66,7 @@ class ConsoleHome extends Component {
             }
         }).then((res) => {
             console.log(res.data);
-            let group_id = 0;
+            let group_id = '';
             if ( res.data.taskGroups.find((element) => {
                 return element._id === this.state.activeGroupId;
             }) ) {
