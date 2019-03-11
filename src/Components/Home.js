@@ -5,7 +5,8 @@ import '../css/home.css';
 class Home extends Component {
 
   render() {
-    return <Redirect to='/console' />;
+    window.location = '/console';
+    return "";
     // redirect to happy birthday page if today is zoey's birthday
     // const date_now = new Date();
     // const mm = date_now.getMonth() + 1;

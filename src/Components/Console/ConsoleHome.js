@@ -43,11 +43,21 @@ class ConsoleHome extends Component {
      * API Calls
      */
     keepAliveRequest() {
-        const keepAliveUrl = this.props.APIBaseUrl;
+        const keepServerAliveUrl = this.props.APIBaseUrl;
+        const keepWebAliveUrl = '/eric';
 
         axios({
             method: "GET",
-            url: keepAliveUrl
+            url: keepServerAliveUrl
+        }).then((res) => {
+            console.log(res);
+        }, (err) => {
+            console.log(err);
+        });
+
+        axios({
+            method: "GET",
+            url: keepWebAliveUrl
         }).then((res) => {
             console.log(res);
         }, (err) => {
