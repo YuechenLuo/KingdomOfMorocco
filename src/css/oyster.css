@@ -1,0 +1,41 @@
+.oyster-body {
+	padding: 1rem 3rem;
+}
+
+.oyster-body img {
+	display: inline-block;
+	margin-top: 3rem;
+	width: 30%;
+}
+
+.oyster-body .content {
+	display: inline-block;
+	padding-left: 3rem;
+	vertical-align: top;
+    width: 70%;
+    margin-top: 5rem;
+}
+
+.oyster-body .content p {
+	margin: 0.1rem 0; 
+}
+
+.promo-code {
+	font-family: "Lucida Console", Monaco, monospace;
+	padding: 1rem 2rem;
+	margin: 0.5rem 0;
+	color: #ddd;
+	background-color: #333;
+}
+
+@media(max-width: 600px) {
+	.oyster-body img {
+		width: 100%;
+		display: block;
+	}
+	.oyster-body .content {
+		width: 100%;
+		display: block;
+	}
+
+}
