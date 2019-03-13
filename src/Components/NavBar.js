@@ -8,7 +8,7 @@ class NavBar extends Component {
     getUserInfo() {
         return (
             <div className='userInfo'>
-                I'm Peter
+                
             </div>
         );
     }

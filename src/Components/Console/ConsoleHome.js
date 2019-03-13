@@ -95,6 +95,7 @@ class ConsoleHome extends Component {
             // TODO: Error handling
             const status = err.response.status;
             if ( status === 403 || status === 401) {
+                localStorage.setItem('loginFrom', '/console');
                 window.location = '/signin';
             }
         });
@@ -121,6 +122,7 @@ class ConsoleHome extends Component {
             // TODO: Error handling
             const status = err.response.status;
             if ( status === 403 || status === 401) {
+                localStorage.setItem('loginFrom', '/console');
                 window.location = '/signin';
             }
 
@@ -143,6 +145,7 @@ class ConsoleHome extends Component {
             // TODO: Error handling
             const status = err.response.status;
             if ( status === 403 || status === 401) {
+                localStorage.setItem('loginFrom', '/console');
                 window.location = '/signin';
             } else {
                 console.log(err.response);
@@ -173,6 +176,7 @@ class ConsoleHome extends Component {
             // TODO: Error handling
             const status = err.response.status;
             if ( status === 403 || status === 401) {
+                localStorage.setItem('loginFrom', '/console');
                 window.location = '/signin';
             }
 
@@ -197,6 +201,7 @@ class ConsoleHome extends Component {
             // TODO: Error handling
             const status = err.response.status;
             if ( status === 403 || status === 401) {
+                localStorage.setItem('loginFrom', '/console');
                 window.location = '/signin';
             }
 
@@ -220,6 +225,7 @@ class ConsoleHome extends Component {
             // TODO: Error handling
             const status = err.response.status;
             if ( status === 403 || status === 401) {
+                localStorage.setItem('loginFrom', '/console');
                 window.location = '/signin';
             }
 
@@ -242,6 +248,7 @@ class ConsoleHome extends Component {
             // TODO: Error handling
             const status = err.response.status;
             if ( status === 403 || status === 401) {
+                localStorage.setItem('loginFrom', '/console');
                 window.location = '/signin';
             } else {
                 console.log(err.response);

@@ -46,6 +46,7 @@ class Signin extends Component {
         }, (err) => {
             // TODO: Display error
             console.log(err.response);
+            localStorage.removeItem('accessToken');
         });
     }
 
@@ -62,6 +63,7 @@ class Signin extends Component {
     }
 
     render() {
+        localStorage.removeItem('accessToken');
         return (
             <form id="Signin" onSubmit={this.signinHandler}>
                 <FormGroup controlId='email' bsSize='lg'>

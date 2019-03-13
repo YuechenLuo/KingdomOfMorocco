@@ -6,7 +6,8 @@ import Signin from './Components/Signin';
 import FRM from './Components/FRM';
 import NavBar from './Components/NavBar';
 import EricHomepage from './Components/Eric/EricHomepage';
-import ConsoleHome from './Components/Console/ConsoleHome'
+import ConsoleHome from './Components/Console/ConsoleHome';
+import Oysters from './Components/Oysters';
 
 import './css/global.css';
 
@@ -21,23 +22,6 @@ class App extends Component {
             hideNavBar: ['/signin', '/ZoeyBirthday', '/console']
         };
 
-        this.userInfoUpdater = this.userInfoUpdater.bind(this);
-        this.signinRedirector = this.signinRedirector.bind(this);
-
-    }
-
-    userInfoUpdater(info) {
-        this.setState({
-            userInfo: info,
-            showSigninPage: false,
-            signedin: true
-        });
-    }
-
-    signinRedirector(show) {
-        this.setState({
-            showSigninPage: true
-        });
     }
 
     componentWillMount() {
@@ -55,8 +39,7 @@ class App extends Component {
         return (
             <div>
                 { showNavbar && <NavBar
-                    signedin={this.state.signedin}
-                    signinRedirector={this.signinRedirector}/> }
+                    signedin={this.state.signedin}/> }
 
                 <BrowserRouter>
                     <div>
@@ -71,6 +54,11 @@ class App extends Component {
                         <Route path='/console' component={
                             () => <ConsoleHome
                                 APIBaseUrl={this.state.APIBaseUrl} />
+
+                        }/>
+                        <Route path='/oyster' component={
+                            () => <Oysters signedin={this.state.signedin}/>
+                        
                         }/>
                     </div>
                 </BrowserRouter>
