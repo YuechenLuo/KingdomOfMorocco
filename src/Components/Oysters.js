@@ -10,7 +10,11 @@ class Oysters extends Component {
         return "";
     }
     return <div className="oyster-body">
-        <p>hahaha</p>
+        <p>听说。。有些人想吃生蚝？？</p>
+        <a>点我点我</a>
+        <p>5个优惠码</p>
+
+        <p>可以带林那啥一起吃</p>
     </div>;
   }
 }
