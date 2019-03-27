@@ -11,18 +11,16 @@ class Dozo extends Component {
         return "";
     }
     return <div className="oyster-body">
-            <p></p>
-            <a href="https://www.meituan.com/meishi/d47291534.html">点我点我</a><br/>
-            <a href="http://www.meituan.com/meishi/118031866/">这家店😬</a>
-            <p>5个优惠码, 两人份😝</p>
-            <p className="promo-code">
-                086886634492 未消费<br/>
-                199033734964 未消费<br/>
-                123622034948 未消费<br/>
-                273553334330 未消费<br/>
-                075256634192 未消费<br/>
+            <p>找到工作请你们吃饭😝</p>
+            <a href="https://www.meituan.com/meishi/d44423680.html">优惠券信息</a><br/>
+            <a href="http://www.meituan.com/meishi/70863/">家门口环亚广场这家店</a>
+            <p>4个优惠码, 带公公舅舅一起吃</p>
+            <p className="promo-code">  
+              美团券密码：101381180203 未消费
+              美团券密码：019049180749 未消费
+              美团券密码：124595480659 未消费
+              美团券密码：098701880335 未消费
             </p>
-            <p>可以带林那啥一起吃😬</p>
     </div>;
   }
 }
