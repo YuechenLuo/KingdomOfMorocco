@@ -82,7 +82,17 @@
     color: #aaa;
     outline: none;
 }
-.task-op-bar button:hover {
+.task-op-bar button.disabled {
+    background-color: transparent;
+    margin-right: 1rem;
+    padding: 0.2rem 1rem;
+    border: #555 1px solid;
+    border-radius: 5px;
+    color: #555;
+    outline: none;
+}
+
+.task-op-bar button:not(.disabled):hover {
     background-color: #444;
 }
 

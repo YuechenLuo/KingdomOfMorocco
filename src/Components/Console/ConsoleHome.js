@@ -294,9 +294,11 @@ class ConsoleHome extends Component {
     // Task handlers
 
     newTaskHandler() {
-        this.setState({
-            editNewTask: true
-        });
+        if (this.state.activeGroupId !== '') {
+            this.setState({
+                editNewTask: true
+            });
+        }
     }
 
     componentWillMount() {
@@ -345,7 +347,9 @@ class ConsoleHome extends Component {
                     selectGroup={this.selectGroup}/>
                 <div className="task-list-container">
                     <div className="task-op-bar">
-                        <button onClick={this.newTaskHandler}>New Task</button>
+                        <button 
+                            onClick={this.newTaskHandler}
+                            className={`${this.state.activeGroupId===''?'disabled':''}`}>New Task</button>
                         <button>Clear Tasks</button>
                     </div>
                     <TaskList

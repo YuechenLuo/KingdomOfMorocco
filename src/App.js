@@ -8,6 +8,7 @@ import NavBar from './Components/NavBar';
 import EricHomepage from './Components/Eric/EricHomepage';
 import ConsoleHome from './Components/Console/ConsoleHome';
 import Oysters from './Components/Oysters';
+import Dozo from './Components/Dozo';
 
 import './css/global.css';
 
@@ -19,7 +20,10 @@ class App extends Component {
             signedin: false,
             APIBaseUrl: 'https://kom-service-beta.herokuapp.com',
             // APIBaseUrl: 'http://localhost:8080',
-            hideNavBar: ['/signin', '/ZoeyBirthday', '/console']
+            hideNavBar: [
+                '/signin',
+                '/ZoeyBirthday',
+                '/console']
         };
 
     }
@@ -57,9 +61,11 @@ class App extends Component {
 
                         }/>
                         <Route path='/oyster' component={
-                            () => <Oysters signedin={this.state.signedin}/>
-                        
+                            () => <Oysters signedin={this.state.signedin}/> 
                         }/>
+                        <Route path='/dozo' component={
+                            () => <Dozo signedin={this.state.signedin}/>
+                        }    />
                     </div>
                 </BrowserRouter>
             </div>);
