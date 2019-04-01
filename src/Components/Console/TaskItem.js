@@ -27,7 +27,7 @@ class TaskItem extends Component {
     }
 
     taskFinishHandler(e) {
-        if ( !this.opBar.contains(e.target) ) {
+        if ( !this.opBar.contains(e.target) && !this.state.editing ) {
             // Done
             this.setState({
                 finishing: true
@@ -43,6 +43,7 @@ class TaskItem extends Component {
     }
 
     handleClick(e) {
+        console.log(e.target);
         if ( !this.textarea.contains(e.target) && this.state.editing) {
             // Focus out
             this.setState({
@@ -87,12 +88,18 @@ class TaskItem extends Component {
             <div className={`task-item${this.state.editing?' editing':''}`}
                 onClick={this.taskFinishHandler}
                 key={this.props.body}>
-                <div className="done-img placeholder">
-                    <img src={doneIcon} alt="doneIcon"/>
-                </div>
-                <div className={`done-img real${this.state.finishing?' show':''}`}>
-                    <img src={doneIcon} alt="doneIcon"/>
-                </div>
+                {
+                    !this.state.editing &&
+                    <div className="done-img placeholder">
+                        <img src={doneIcon} alt="doneIcon"/>
+                    </div>
+                }
+                {
+                    !this.state.editing &&
+                    <div className={`done-img real${this.state.finishing?' show':''}`}>
+                        <img src={doneIcon} alt="doneIcon"/>
+                    </div>
+                }
                 <div className="taskitem-op-bar" ref={this.bindOpBar}>
                     { !this.state.editing && <a className="edit-button"
                         onClick={this.editTaskHandler}>

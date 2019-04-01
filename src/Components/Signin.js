@@ -37,10 +37,9 @@ class Signin extends Component {
         })
         .then((res) => {
             // send back login result here
-            console.log(res);
             localStorage.setItem('accessToken', res.data.accessToken);
             const redirectUrl = localStorage.getItem('loginFrom');
-            console.log(redirectUrl);
+            localStorage.removeItem('loginFrom');
             window.location = redirectUrl ? redirectUrl : '/';
 
         }, (err) => {

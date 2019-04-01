@@ -16,7 +16,7 @@
     left: 18rem;
     right: 0;
     border-top: #000 1px solid;
-    overflow-x: scroll;
+    overflow-y: scroll;
     font-family: Helvetica;
 }
 
@@ -34,7 +34,11 @@
 .task-group-item p.group-name {
     margin: 0;
     padding-left: 0.5rem;
-    display: inline;
+    padding-top: 0.3rem;
+    display: inline-block;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .task-group-item .edit-menu {
     float: right;
@@ -136,6 +140,7 @@
 
 .taskitem-op-bar {
     position: relative;
+    z-index: 500;
 }
 .taskitem-op-bar .edit-button {
     float: right;
@@ -160,17 +165,15 @@
     font-size: 1.5em;
     border: 0;
     outline: none;
+    position: relative;
+    z-index: 300;
 }
 
 ::-webkit-scrollbar { width: 8px; height: 3px;}
-::-webkit-scrollbar-button {  background-color: #666; }
-::-webkit-scrollbar-track {  background-color: #646464;}
-::-webkit-scrollbar-track-piece { background-color: #222;}
-::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+::-webkit-scrollbar-button {  background-color: transparent; z-index: 3000;}
+::-webkit-scrollbar-track {  background-color: transparent;}
+::-webkit-scrollbar-track-piece { background-color: transparent;}
+::-webkit-scrollbar-thumb { background-color: #aa9; border-radius: 3px;}
 ::-webkit-scrollbar-corner { background-color: transparent;display: none;}
 ::-webkit-resizer { background-color: transparent;}
 
-.task-list .task-item textarea::-webkit-scrollbar-button {  background-color: transparent; }
-.task-list .task-item textarea::-webkit-scrollbar-track {  background-color: transparent;}
-.task-list .task-item textarea::-webkit-scrollbar-track-piece { background-color: transparent;}
-.task-list .task-item textarea::-webkit-scrollbar-thumb { background-color: #aa9; border-radius: 3px;}

@@ -14,11 +14,7 @@ class PopupInput extends Component {
 
     onInputChange(value, key) {
         let it = this.state.inputTexts;
-        if ( key in it ) {
-            it[key] = value;
-        } else {
-            it.push({key:value});
-        }
+        it[key] = value;
         this.setState({
             inputTexts: it
         });
@@ -33,7 +29,7 @@ class PopupInput extends Component {
                         <label>{row.label+":"}</label>
                         <input
                             autoFocus={i===0}
-                            value={row.defaultValue}
+                            defaultValue={row.defaultValue}
                             type={row.type?row.type:'text'}
                             onChange={(e)=>{
                                 this.onInputChange(e.target.value, row.key)

@@ -21,7 +21,8 @@ class ConsoleHome extends Component {
             editNewTask: false,
             activeGroupId: '',
             renameGroupId: '',
-            renameGroupName: ''
+            renameGroupName: '',
+            loading: false
         };
 
         this.keepAliveRequest = this.keepAliveRequest.bind(this);
@@ -257,11 +258,6 @@ class ConsoleHome extends Component {
         });
     }
 
-
-    /**
-     *
-     */
-
     clearPopups() {
         this.setState({
             showCreateGroupPopup: false,
@@ -302,6 +298,22 @@ class ConsoleHome extends Component {
     }
 
     componentWillMount() {
+        axios.interceptors.request.use((config) => {
+            this.setState({loading:true});
+            return config;
+        }, (error) => {
+            this.setState({loading:false});
+            return Promise.reject(error);
+        });
+
+        axios.interceptors.response.use((response) => {
+            this.setState({loading:false});
+            return response;
+        }, (error) => {
+            this.setState({loading:false});
+            return Promise.reject(error);
+        });
+        
         this.retrieveTaskInfo();
     }
 
@@ -309,14 +321,17 @@ class ConsoleHome extends Component {
         this.keepAliveInterval = setInterval(
             () => {
                 this.keepAliveRequest();
-            }, 1200000);
+            }, 1790000);
     }
 
     render() {
         
         return (
             <div className="console-container">
-
+                { this.state.loading && 
+                    <div className="loading-panel">
+                        <div className="lds-dual-ring"></div>
+                    </div> }
                 { this.state.showCreateGroupPopup && <PopupInput
                     title="Create Task Group"
                     fields={[{
@@ -350,7 +365,8 @@ class ConsoleHome extends Component {
                         <button 
                             onClick={this.newTaskHandler}
                             className={`${this.state.activeGroupId===''?'disabled':''}`}>New Task</button>
-                        <button>Clear Tasks</button>
+                        <button className="disabled">All Done (in dev)</button>
+                        <button className="disabled">Cancel All (in dev)</button>
                     </div>
                     <TaskList
                         activeGroupId={this.state.activeGroupId}
