@@ -6,7 +6,7 @@ class Dozo extends Component {
 
   render() {
     if ( !this.props.signedin ) {
-        localStorage.setItem('loginFrom', '/oyster');
+        localStorage.setItem('loginFrom', '/dozo');
         window.location = '/signin';
         return "";
     }
