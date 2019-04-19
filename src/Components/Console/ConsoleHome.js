@@ -299,6 +299,7 @@ class ConsoleHome extends Component {
 
     componentWillMount() {
         axios.interceptors.request.use((config) => {
+            console.log(config);
             this.setState({loading:true});
             return config;
         }, (error) => {
@@ -318,10 +319,11 @@ class ConsoleHome extends Component {
     }
 
     componentDidMount() {
-        this.keepAliveInterval = setInterval(
-            () => {
-                this.keepAliveRequest();
-            }, 1790000);
+        // this.keepAliveInterval = setInterval(
+        //     () => {
+        //         // this.keepAliveRequest();
+        //         this.retrieveTaskInfo();
+        //     }, 60000);
     }
 
     render() {
